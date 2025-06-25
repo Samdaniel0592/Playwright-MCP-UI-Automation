@@ -6,10 +6,11 @@ import { FlightResultsPage } from '../pages/FlightResultsPage';
 // import { testData } from '../helpers/testData'; // Uncomment if helpers/testData.ts exists
 
 test.describe('SpiceJet Flight Search', () => {
-  test('should search for flights and print price', async ({ page }) => {
+  test('should search for flights and print price', async ({ context, page }) => {
+    // Grant geolocation permission to avoid browser popup
+    await context.grantPermissions(['geolocation'], { origin: 'https://www.spicejet.com' });
     const homePage = new HomePage(page);
     await homePage.goto();
-    await homePage.handleAllowPopup();
     await homePage.selectOneWayTrip();
     await homePage.selectFromAirport('MAA');
     await homePage.selectToAirport('DEL');
